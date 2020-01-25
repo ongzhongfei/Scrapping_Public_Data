@@ -1,0 +1,61 @@
+{% load static %}<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">  
+        <title>{% block title %}Fast Data{% endblock %}</title>
+        <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
+        {% block stylesheet %}{% endblock %}
+      </head>
+
+
+      <h1>Government Securities (Conventional)</h1>
+      <br>
+<!-- Tenure header -->
+    <table class="table">
+        <thead class="thead-inverse">
+          <tr>
+            <th>
+                Date
+                {% for tenure in distinct_tenures %}
+                <th>{{tenure.0}}</th>
+                {% endfor %}
+            </th>
+          </tr>
+
+
+
+
+<!-- To create a for loop -->
+          <!-- <tr>
+            <td>
+                {{tenures.first.created_date}}
+                {% for tenure in tenures %}
+                <td>{{tenure.rate}}</td>
+                {% endfor %}
+            </td>
+          </tr> -->
+
+          {% for date in distinct_dates %}
+          <tr>
+            <td>
+                {{date.0}}
+                {% for tenure in tenures %}
+                {% if tenure.created_date == date.0 %}
+                <td>{{tenure.rate}}</td>
+                {% endif %}
+                {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+
+
+
+
+          <!-- {% for tenure in tenures %}
+          <td>{{tenure.created_date}}</td>
+          {% endfor %} -->
+        </thead>
+    </table>
+</html>
