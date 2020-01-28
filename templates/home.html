@@ -7,44 +7,58 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <link rel="stylesheet" href="{% static 'css/app.css' %}">
         {% block stylesheet %}{% endblock %}
-      </head>
+    </head>
 
-
-      <h1>Government Securities (Conventional)</h1>
-      <br>
+      {% for group in distinct_group %}
+        <h1>{{group.0}}</h1>
+        <br>
 <!-- Tenure header -->
     <table class="table">
+        <!-- Method 1 to get tenure title. Not scalable. To fix -->
+        <!-- <thead class="thead-inverse">
+          <tr>
+            <th>
+                Date
+                {% if group.0 == 'Government Securities (Conventional)'%}
+                  {% for tenure in distinct_tenures_mgs %}
+                      <th>{{tenure.0}}</th>
+                  {% endfor %}
+
+                {% elif group.0 == 'Government Securities (Islamic)' %}
+                  {% for tenure in distinct_tenures_mgi %}
+                    <th>{{tenure.0}}</th>
+                  {% endfor %}     
+                {% endif %}   
+
+            </th>
+          </tr>
+        </thead> -->
+
         <thead class="thead-inverse">
           <tr>
             <th>
                 Date
-                {% for tenure in distinct_tenures %}
-                <th>{{tenure.0}}</th>
-                {% endfor %}
+                  {% for tenure in tenures %}
+                    {% if tenure.created_date == latest_date and tenure.group == group.0 %}
+                      <th>{{tenure.tenure}}</th>
+                    {% endif %}
+                  {% endfor %}
+
+ 
+
             </th>
           </tr>
+        </thead>
 
-
-
-
-<!-- To create a for loop -->
-          <!-- <tr>
-            <td>
-                {{tenures.first.created_date}}
-                {% for tenure in tenures %}
-                <td>{{tenure.rate}}</td>
-                {% endfor %}
-            </td>
-          </tr> -->
 
           {% for date in distinct_dates %}
           <tr>
             <td>
                 {{date.0}}
                 {% for tenure in tenures %}
-                {% if tenure.created_date == date.0 %}
-                <td>{{tenure.rate}}</td>
-                {% endif %}
+                  {% if tenure.created_date == date.0 and tenure.group == group.0 %}
+                    <td>{{tenure.rate}}</td>
+                  {% endif %}
                 {% endfor %}
             </td>
           </tr>
@@ -53,9 +67,7 @@
 
 
 
-          <!-- {% for tenure in tenures %}
-          <td>{{tenure.created_date}}</td>
-          {% endfor %} -->
-        </thead>
     </table>
+    <br>
+    {% endfor %}
 </html>

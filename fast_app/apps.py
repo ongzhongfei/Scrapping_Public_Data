@@ -9,4 +9,4 @@ class FastAppConfig(AppConfig):
         from data_updater import scheduler, dataApi
         #### Run once when django is started, then run the scheduler
         dataApi._pull_and_update()       
-        scheduler.start()
+        # scheduler.start()
