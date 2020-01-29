@@ -119,7 +119,7 @@ def _pull_and_update():
 
 
 
-
+                #### Ingest data into model only if its new data
                 if tenure_raw.objects.filter(group = group).last() is not None:
                     if consolidated_date == tenure_raw.objects.filter(group = group).last().created_date:
                         print (group,"No new data. Not saving data into model")
