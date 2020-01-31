@@ -25,7 +25,8 @@ def _pull_and_update():
 
     #### request.get doesnt work
     #### New link is inserted into the page everyday. To get the latest link,
-    #### I first find all the link in the page
+    #### I first find all the links in the previous page
+    ####
     try:
         with urllib.request.urlopen("https://fast.bnm.gov.my/fastweb/public/FastPublicBrowseServlet.do?mode=MAIN&taskId=PB030100") as response:
             html = response.read()

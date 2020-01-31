@@ -1,21 +1,17 @@
 {% extends "base.html" %}
 {% load static %}<!DOCTYPE html>
 {% block content %}
-      {% for group in distinct_group %}
-        <h1>{{group.0}}</h1>
+
+
+
+        <h1>Government Securities (Islamic)</h1>
         <br>
 
 <!-- Tenure header -->
-        {% if group.0 == 'Government Securities (Conventional)' %}
-        <button id="btnConventional" type="button" class="button">ExportC</button>
-        <br><br>
-        <table id = "Conventional" class="table">
-        {% elif group.0 == 'Government Securities (Islamic)' %}
-        <button id="btnIslamic" type="button" class="button">ExportI</button>
+
+        <button id="btnIslamic" type="button" class="button">Export</button>
         <br><br>
         <table id = "Islamic" class="table">
-        testing elif group
-        {% endif %}
         <!-- Method 1 to get tenure title. Not scalable. To fix -->
         <!-- <thead class="thead-inverse">
           <tr>
@@ -40,7 +36,7 @@
           <tr>
                 <th>Date</th>
                   {% for tenure in tenures %}
-                    {% if tenure.created_date == latest_date and tenure.group == group.0 %}
+                    {% if tenure.created_date == latest_date and tenure.group == 'Government Securities (Islamic)' %}
                       <th>{{tenure.tenure}}</th>
                     {% endif %}
                   {% endfor %}
@@ -52,7 +48,7 @@
           <tr>
                 <td>{{date.0}}</td>
                 {% for tenure in tenures %}
-                  {% if tenure.created_date == date.0 and tenure.group == group.0 %}
+                  {% if tenure.created_date == date.0 and tenure.group == 'Government Securities (Islamic)' %}
                     <td>{{tenure.rate}}</td>
                   {% endif %}
                 {% endfor %}
@@ -67,8 +63,6 @@
     <br>
 
 
-
-    {% endfor %}
   
   <script src="{% static 'js/TableCSVExporter.js' %} " ></script>
   <script src="{% static 'js/TableCSVExporter2.js' %} " ></script>
@@ -76,9 +70,10 @@
 
       
 
+
   <script>
-    const dataTable = document.getElementById("Conventional");
-    const btnExportToCsv = document.getElementById("btnConventional");
+    const dataTable = document.getElementById("Islamic");
+    const btnExportToCsv = document.getElementById("btnIslamic");
 
 
     btnExportToCsv.addEventListener("click", () => {
@@ -89,35 +84,13 @@
     const anchorElement = document.createElement("a");
 
     anchorElement.href = blobUrl;
-    anchorElement.download = "Conventional.csv";
+    anchorElement.download = "Islamic.csv";
     anchorElement.click();
 
     setTimeout(() => {
         URL.revokeObjectURL(blobUrl);
     }, 500);
 });
-</script>
-<script>
-    const dataTable_Islamic = document.getElementById("Islamic");
-    const btnExportToCsv_Islamic = document.getElementById("btnIslamic");
-
-
-    btnExportToCsv_Islamic.addEventListener("click2", () => {
-    const exporter_Islamic = new TableCSVExporter2(dataTable_Islamic);
-    const csvOutput_Islamic = exporter_Islamic.convertToCSV();
-    const csvBlob_Islamic = new Blob([csvOutput_Islamic], { type: "text/csv" });
-    const blobUrl_Islamic = URL.createObjectURL(csvBlob_Islamic);
-    const anchorElement_Islamic = document.createElement("a");
-
-    anchorElement_Islamic.href = blobUrl_Islamic;
-    anchorElement_Islamic.download = "Islamic.csv";
-    anchorElement_Islamic.click2();
-
-    setTimeout(() => {
-        URL.revokeObjectURL(blobUrl_Islamic);
-    }, 500);
-});
-
 </script>
   <!-- <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
 
